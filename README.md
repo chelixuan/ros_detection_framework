@@ -1,7 +1,5 @@
-# YOLOv5 ROS
-This is a ROS interface for using YOLOv5 for real time object detection on a ROS image topic. It supports inference on multiple deep learning frameworks used in the [official YOLOv5 repository](https://github.com/ultralytics/yolov5).
-
-This Repository is forked from [mats-robotics/yolov5_ros](https://github.com/mats-robotics/yolov5_ros).
+# ROS framework for object detection
+This is a ROS workspace demo for object detection.
 
 ## Installation
 
@@ -30,21 +28,9 @@ sudo apt install ros-noetic-desktop-full
 This package is built and tested on Ubuntu 20.04 LTS and ROS Noetic with Python 3.8.
 
 * Clone the packages to ROS workspace and install requirement for YOLOv5 submodule:
-
-**Method 1**: follow [official YOLOv5 repository](https://github.com/ultralytics/yolov5)
+ 
 ```bash
-cd <ros_workspace>/src
-git clone https://github.com/mats-robotics/detection_msgs.git
-git clone --recurse-submodules https://github.com/mats-robotics/yolov5_ros.git 
-cd yolov5_ros/src/yolov5
-pip install -r requirements.txt # install the requirements for yolov5
-```
-
-**Method 2** : `Recommend` 
-```bash
-git clone https://github.com/chelixuan/yolov5_ros_ws.git
-cd yolov5_ros_ws/src/yolov5
-pip install -r requirements.txt 
+git clone https://github.com/chelixuan/ros_detection_framework.git
 pip install empy==3.3.2
 pip install catkin-tools rospkg
 ```
@@ -52,7 +38,7 @@ pip install catkin-tools rospkg
 * Build the ROS package:
 **conda envs**
 ```bash
-cd yolov5_ros_ws
+cd <ros_workspace>/
 which python # 查看当前 python 的地址，例如得到 /home/chelx/.conda/envs/ros/bin/python
 catkin_make -DPYTHON_EXECUTABLE=/home/chelx/.conda/envs/ros/bin/python # 使用当前环境的python，编译
 # 编译过程中，在工作空间的根目录里会自动产生build和devel两个文件夹及其中的文件
@@ -64,17 +50,21 @@ echo $ROS_PACKAGE_PATH
 
 * Make the Python script executable 
 ```bash
-cd <ros_workspace>/src/yolov5_ros/src
+cd <ros_workspace>/src/xxx_ros/src
 chmod +x detect.py
 ```
 
 ## Basic usage
-Change the parameter for `input_image_topic` in launch/yolov5.launch to any ROS topic with message type of `sensor_msgs/Image` or `sensor_msgs/CompressedImage`. Other parameters can be modified or used as is.
-
 * Launch the node:
+**input_image_topic: rosbag**
 ```bash
 rosbag play <your-rosbag.bag>
-roslaunch yolov5_ros yolov5.launch
+roslaunch xxx_ros xxx.launch
+```
+**input_image_topic: camera**
+```bash
+roslaunch xxx_ros camera.launch
+roslaunch xxx_ros xxx.launch
 ```
 
 * visualize outputs:
@@ -83,15 +73,8 @@ rosnode list
 rosnode info /detect
 rviz
 
-rostopic echo /yolov5/detections
+rostopic echo /xxx/detections
 ```
 
-## Using custom weights and dataset (Working)
-* Put your weights into `yolov5_ros/src/yolov5`
-* Put the yaml file for your dataset classes into `yolov5_ros/src/yolov5/data`
-* Change related ROS parameters in yolov5.launch: `weights`,  `data`
-
 ## Reference
-* YOLOv5 official repository: https://github.com/ultralytics/yolov5
-* YOLOv3 ROS PyTorch: https://github.com/eriklindernoren/PyTorch-YOLOv3
-* Darknet ROS: https://github.com/leggedrobotics/darknet_ros
+* [mats-robotics/yolov5_ros](https://github.com/mats-robotics/yolov5_ros)
