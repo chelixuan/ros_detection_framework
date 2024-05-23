@@ -56,11 +56,13 @@ chmod +x detect.py
 
 ## Basic usage
 * Launch the node:
+
 **input_image_topic: rosbag**
 ```bash
 rosbag play <your-rosbag.bag>
 roslaunch xxx_ros xxx.launch
 ```
+
 **input_image_topic: camera**
 ```bash
 roslaunch xxx_ros camera.launch
